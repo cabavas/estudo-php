@@ -40,7 +40,7 @@ if ($_FILES && !empty($_FILES['file']['name'])) {
     $newFileName = time() . mb_strstr($fileUpload['name'], ".");
 
     if(in_array($fileUpload['type'],$allowedTypes)) {
-        if(move_upload_file($fileUpload['tmp_name'], __DIR__."/uploads/{$newFileName}")) {
+        if(move_uploaded_file($fileUpload['tmp_name'], __DIR__."/uploads/{$newFileName}")) {
             echo "<p class='trigger accept'>Arquivo enviado com sucesso!</p>";
         } else {
             echo "<p class='trigger error'>Erro inesperado</p>";

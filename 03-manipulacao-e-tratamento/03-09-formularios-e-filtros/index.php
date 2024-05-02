@@ -87,7 +87,3 @@ $getForm = filter_input_array(INPUT_GET, $filterForm);
 
 $email = "cursos@upinside.com.br";
 
-var_dump(
-    $filter_var($email, FILTER_VALIDATE_EMAIL),
-    $filter_var_array($getForm, $filterForm)
-);
