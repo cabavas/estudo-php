@@ -2,7 +2,7 @@
 
 spl_autoload_register(function ($class) {
     $prefix = "source\\";
-    $baseDir = __DIR__ . "/";
+    $baseDir = __DIR__ ."/";
     $len = strlen($prefix);
 
     if (strncmp($prefix, $class, $len) !== 0) {
@@ -10,9 +10,11 @@ spl_autoload_register(function ($class) {
     }
 
     $relativeClass = substr($class, $len);
+    
     $file = $baseDir . str_replace("\\", "/", $relativeClass) . ".php";
 
     if (file_exists($file)) {
         require $file;
+        ;
     }
 });
