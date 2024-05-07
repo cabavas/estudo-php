@@ -21,17 +21,23 @@ $inset = "
 ";
 
 try {
-    // $exec = Connect::getInstance()->exec($inset);
-    // var_dump(Connect::getInstance()->lastInsertId());
+    //$exec = Connect::getInstance()->exec($inset);
+    //var_dump(Connect::getInstance()->lastInsertId());
     $exec = null;
 
     $query = Connect::getInstance()->query($inset);
     var_dump(Connect::getInstance()->lastInsertId());
 
-    var_dump($exec, $query);
-} catch (PDOException $e) {
+    var_dump(
+        $exec,
+        $query->errorInfo()
+    );
 
+
+} catch (PDOException $exception) {
+    var_dump($exception);
 }
+
 
 /*
  * [ select ] Ler/Consultar dados.
@@ -44,9 +50,8 @@ try {
     var_dump([
         $query,
         $query->rowCount(),
-        $query->fetchAll(),
+        $query->fetchAll()
     ]);
-
 } catch (PDOException $exception) {
     var_dump($exception);
 }
@@ -58,7 +63,10 @@ try {
 fullStackPHPClassSession("update", __LINE__);
 
 try {
-    $exec = Connect::getInstance()->exec("UPDATE users SET first_name = 'Kaue', last_name = 'Cardoso' WHERE id = '50'");
+    $exec = Connect::getInstance()->exec("
+      UPDATE users SET first_name = 'Kaue', last_name = 'Cardoso'
+      WHERE id > '50'
+    ");
 
     var_dump($exec);
 

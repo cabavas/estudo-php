@@ -26,7 +26,7 @@ fullStackPHPClassSession("model destroy", __LINE__);
 $list = $model->all(100, 30);
 
 if ($list) {
-    /** @var \Source\Models\UserModel $user */
+    /** @var \source\Models\UserModel $user */
     foreach ($list as $user) {
         var_dump($user);
         $user->destroy();

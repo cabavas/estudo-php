@@ -4,7 +4,7 @@ fullStackPHPClassName("05.07 - PDOStatement e bind modes");
 
 require __DIR__ . "/../source/autoload.php";
 
-use source\Database\Connect;
+use Source\Database\Connect;
 
 /**
  * [ prepare ] http://php.net/manual/pt_BR/pdo.prepare.php
@@ -18,7 +18,7 @@ var_dump(
     $stmt,
     $stmt->rowCount(),
     $stmt->columnCount(),
-    $stmt->fetch(),
+    $stmt->fetch()
 );
 
 
@@ -28,29 +28,29 @@ var_dump(
  */
 fullStackPHPClassSession("stmt bind value", __LINE__);
 
-$stmt = Connect::getInstance()->prepare("INSERT INTO users (first_name, last_name)
+$stmt = Connect::getInstance()->prepare("
+    INSERT INTO users (first_name, last_name) 
     VALUE(?, ?)
 ");
-$stmt->bindValue(1, "Gustavo", PDO::PARAM_STR);
-$stmt->bindValue(2, "Web", PDO::PARAM_STR);
+
+$stmt->bindValue(1, 'Gustavo', PDO::PARAM_STR);
+$stmt->bindValue(2, 'Web', PDO::PARAM_STR);
 
 $stmt->execute();
 var_dump($stmt->rowCount(), Connect::getInstance()->lastInsertId());
 
-$stmt = Connect::getInstance()->prepare("INSERT INTO users (first_name, last_name)
+$stmt = Connect::getInstance()->prepare("
+    INSERT INTO users (first_name, last_name) 
     VALUE(:first_name, :last_name)
 ");
-$stmt->bindValue(":first_name", "Gustavo", PDO::PARAM_STR);
-$stmt->bindValue(":last_name", "Web", PDO::PARAM_STR);
+
+$nome = "Gustavo";
+
+$stmt->bindValue(":first_name", $nome, PDO::PARAM_STR);
+$stmt->bindValue(":last_name", 'Web', PDO::PARAM_STR);
+
 $stmt->execute();
-
 var_dump($stmt->rowCount());
-
-// $stmt = Connect::getInstance()->prepare("SELECT * FROM users WHERE id = :id");
-// $stmt->bindValue(":id", 50, PDO::PARAM_INT);
-// $stmt->execute();
-
-// var_dump($stmt->fetch());
 
 
 /*
@@ -58,7 +58,8 @@ var_dump($stmt->rowCount());
  */
 fullStackPHPClassSession("stmt bind param", __LINE__);
 
-$stmt = Connect::getInstance()->prepare("INSERT INTO users (first_name, last_name)
+$stmt = Connect::getInstance()->prepare("
+    INSERT INTO users (first_name, last_name) 
     VALUE(:first_name, :last_name)
 ");
 
@@ -67,8 +68,8 @@ $lastName = "Morandi";
 
 $stmt->bindParam(":first_name", $firstName, PDO::PARAM_STR);
 $stmt->bindParam(":last_name", $lastName, PDO::PARAM_STR);
-$stmt->execute();
 
+$stmt->execute();
 var_dump($stmt->rowCount());
 
 /*
@@ -77,8 +78,8 @@ var_dump($stmt->rowCount());
 fullStackPHPClassSession("stmt execute array", __LINE__);
 
 $stmt = Connect::getInstance()->prepare("
-INSERT INTO users (first_name, last_name)
-VALUE(:first_name, :last_name)
+    INSERT INTO users (first_name, last_name) 
+    VALUE(:first_name, :last_name)
 ");
 
 $user = [
@@ -87,6 +88,7 @@ $user = [
 ];
 
 $stmt->execute($user);
+var_dump($stmt->rowCount());
 
 /*
  * [ bind column ] http://php.net/manual/en/pdostatement.bindcolumn.php
@@ -99,7 +101,8 @@ $stmt->execute();
 $stmt->bindColumn("first_name", $name);
 $stmt->bindColumn("email", $email);
 
-while($user = $stmt->fetch()) {
+while ($user = $stmt->fetch()) {
     var_dump($user);
     echo "O e-mail de {$name} é {$email}";
 }
+

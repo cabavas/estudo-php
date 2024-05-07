@@ -1,5 +1,7 @@
 <?php
+
 use source\Models\UserModel;
+
 require __DIR__ . '/../../fullstackphp/fsphp.php';
 fullStackPHPClassName("05.09 - Métodos de busca e leitura");
 
@@ -32,7 +34,7 @@ fullStackPHPClassSession("all", __LINE__);
 
 $all = $model->all(5);
 
-/** @var UserModel $user */
+/** @var \Source\Models\UserModel $user */
 foreach ($all as $user) {
     var_dump($user, "{$user->first_name} {$user->last_name}");
 }

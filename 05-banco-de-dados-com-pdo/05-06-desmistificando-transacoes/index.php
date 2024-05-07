@@ -4,7 +4,7 @@ fullStackPHPClassName("05.06 - Desmistificando transações");
 
 require __DIR__ . "/../source/autoload.php";
 
-use source\Database\Connect;
+use Source\Database\Connect;
 
 /*
  * [ transaction ] https://pt.wikipedia.org/wiki/Transa%C3%A7%C3%A3o_em_base_de_dados
@@ -24,26 +24,27 @@ use source\Database\Connect;
 fullStackPHPClassSession("transaction", __LINE__);
 
 try {
-    $pdo = Connect::getInstance();
-    $pdo->beginTransaction();
+    Connect::getInstance()->beginTransaction();
 
-    $pdo->query("INSERT INTO users (first_name, last_name, email, document) 
-        VALUES ('Robson', 'Leite', 'cursos@upinside.com.br', '123456789');"
-    );
+    Connect::getInstance()->query("
+        INSERT INTO users (first_name, last_name, email, document) 
+        VALUES ('Robson', 'Leite', 'cursos@upinside.com.br', 2983729783);
+    ");
 
-    $userId = $pdo->lastInsertId();
+    $userId = Connect::getInstance()->lastInsertId();
 
-    $pdo->query(
-        "INSERT INTO users_address (user_id, street, number, complement)
-        VALUES('{$userId}', 'Rua da Up', '3999', 'Sala 210');"
-    );
+    Connect::getInstance()->query("
+        INSERT INTO users_address (user_id, street, number, complement)
+        VALUES ('{$userId}', 'Rua da Up', 2837, 'Sala 208');
+    ");
 
-    $pdo->commit();
-    echo "<p class='trigger accept'>Cadastrado com Sucesso!</p>";
-} catch (PDOException $e) {
-    $pdo->rollBack();
-    var_dump($e);
+    Connect::getInstance()->commit();
+    echo "<p class='trigger accept'>Cadastro com sucesso!</p>";
+} catch (PDOException $exception) {
+    Connect::getInstance()->rollBack();
+    var_dump($exception);
 }
+
 
 
 
