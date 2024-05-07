@@ -4,7 +4,7 @@ namespace source\Core;
 
 class Session
 {
-    
+
     public function __construct()
     {
         if (!session_id()) {
@@ -12,15 +12,17 @@ class Session
             session_start();
         }
     }
-    
-    public function __get($name) {
-        if(!empty($_SESSION[$name])) {
+
+    public function __get($name)
+    {
+        if (!empty($_SESSION[$name])) {
             return $_SESSION[$name];
         }
         return null;
     }
-    
-    public function __isset($name): bool {
+
+    public function __isset($name): bool
+    {
         return $this->has($name);
     }
 
@@ -56,5 +58,15 @@ class Session
     {
         session_destroy();
         return $this;
+    }
+
+    public function flashSession(): ?Message
+    {
+        if ($this->has("flash")) {
+            $flash = $this->flash;
+            $this->unset("flash");
+            return $flash;
+        }
+        return null;
     }
 }
