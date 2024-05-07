@@ -11,8 +11,13 @@ fullStackPHPClassSession("string", __LINE__);
 
 $string = "Essa é uma string, nela temos um under_score e um guarda-chuva!";
 
-$message = new \Source\Core\Message();
+$message = new \source\Core\Message();
 
 echo $message->info(str_slug($string));
 echo $message->info(str_studly_case($string));
 echo $message->info(str_camel_case($string));
+
+
+echo $message->info(str_title($string));
+echo $message->info(str_limit_words($string, 8, "[leia mais]"));
+echo $message->info(str_limit_chars($string, 48));
